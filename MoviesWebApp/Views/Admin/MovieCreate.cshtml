@@ -1,0 +1,62 @@
+﻿@model AdminMovieCreateModel
+
+
+
+
+
+<h1>Create Movie</h1>
+
+<hr />
+
+
+<form asp-controller="Admin" asp-action="MovieCreate" method="post">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div asp-validation-summary="All"></div>
+            <div class="mb-3">
+                <label asp-for="Title"></label>@*asp-for ile modelden gelen değişkenlerin tipleri ve isimleri set ediliyor*@
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ReleaseDate"></label>
+                <input asp-for="ReleaseDate" class="form-control"/>
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="IsClassic"></label>
+                <input asp-for="IsClassic" type="checkbox"/>
+                <span asp-validation-for="IsClassic" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            @foreach (var item in (List<Genre>)ViewBag.Genres)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" name="GenreIds" type="checkbox" value="@item.GenreId"
+                           id="genre_@(item.GenreId)"
+                            @(Model.GenreIds != null && Model.GenreIds.Any(i => i == item.GenreId) ? "checked" : "" )>
+                    <label class="form-check-label" for="genre_@(item.GenreId)">
+                        @item.name
+                    </label>
+                </div>
+            }
+            <span asp-validation-for="GenreIds" class="text-danger"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+@*input altındaki uyarıları sayfa yenilemeden vermektedir*@
+@section script
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+}

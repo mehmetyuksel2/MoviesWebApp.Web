@@ -1,0 +1,17 @@
+﻿@model HomePageViewModel// movie modelinin import edildiği satır. bu durum model içerisindeki değişkenleri bu sayfada kullanmamıza yarar
+
+
+@section header {
+    @await Html.PartialAsync("_header", false) <!-- header nesnesini layout dosyasına şartlı(sadece index) import ettik --> 
+ }
+@section script {
+    <script src="/js/script.js"></script> <!-- script dosyasını layout dosyasına şartlı(sadece index)  import ettik -->
+}
+
+        <h1>Film Listesi</h1>
+        <div id="filmler">
+         @foreach (var movie in Model.PopularMovies)
+        {
+            @await Html.PartialAsync("_movie", movie)
+        }
+        </div> 

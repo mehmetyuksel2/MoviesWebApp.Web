@@ -1,0 +1,8 @@
+﻿@model List<Genre>// list genre değerlerini kullanabilmek için import edilen class
+
+<ul class="list-group">
+    @foreach (var genre in Model)
+    {
+        <li class="list-group-item">@genre.name</li>
+    }
+</ul>
