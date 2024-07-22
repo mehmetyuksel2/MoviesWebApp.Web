@@ -158,30 +158,34 @@ namespace MoviesWebApp.Controller2
             {
 
                 var entity = _context.Genres.Include("Movies").FirstOrDefault(i => i.GenreId == model.GenreId);
+                //genres tablosunu ilgli olan movies verileriyle beraber çeker
                 if (entity == null)
                 {
                     return NotFound();
                 }
-                entity.name = model.Name;
+                entity.name = model.Name;//genre ismi güncelleriz
                 foreach (var id in movieIds)
                 {
                     entity.Movies.Remove(entity.Movies.FirstOrDefault(m => m.MovieId == id));
+                    //formdaki checkbox idlerini birer birer kontrol edip
+                    //eşleşenler movie ve genre ortak tablodan silinir
                 }
 
                 _context.SaveChanges();
                 return RedirectToAction("GenreList");
+                //genreliste geri döndürür
             }
-            return View(model);
+            return View(model);//form şartlarını sağlanmaması durumunda tekrar view e model ile beraber yönlendiririz
         }
         public IActionResult MovieCreate()
         {
-            ViewBag.Genres = _context.Genres.ToList();
-            return View(new AdminMovieCreateModel());
+            ViewBag.Genres = _context.Genres.ToList();//tür listesini viewbag.genrese aktarırız
+            return View(new AdminMovieCreateModel());//boş bir AdminMovieCreateModel objesi ile viewe döneriz
         }
         [HttpPost]
         public IActionResult MovieCreate(AdminMovieCreateModel model)
         {
-            if (model.Title != null && model.Title.Contains("@"))
+            if (model.Title != null && model.Title.Contains("@"))//@ işareti olup olmadığını kontrol eder
             {
                 ModelState.AddModelError("", "Film başlığında '@' işareti kullanamazsınız.");
             }
@@ -244,7 +248,7 @@ namespace MoviesWebApp.Controller2
             return View(GetGenre());
         }
 
-        public IActionResult VerifyMovie(string title)
+        public IActionResult VerifyMovie(string title)//fil adı kontrolü
         {
             if (_context.MovieSet.Any(i=>i.Title == title))
             {

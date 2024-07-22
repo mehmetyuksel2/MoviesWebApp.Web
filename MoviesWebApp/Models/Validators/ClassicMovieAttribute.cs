@@ -10,7 +10,8 @@ namespace MoviesWebApp.Models.Validators
             Year = year;
         }
         public int Year { get; set; }
-
+        //ÖRNEK OLARAK YAŞ VERİSİNİN BELİRLİ KOŞULLARDA GİRİLMESİNİ SAĞLARIZ
+        //VALİDATİONRESULT İLE CUSTOM BİR ISVALİD OLUŞTURDUK
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var movie = (AdminMovieCreateModel)validationContext.ObjectInstance;
